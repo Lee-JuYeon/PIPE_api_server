@@ -1,6 +1,6 @@
 require("dotenv").config();
 var axios = require('axios');
-var REALESTATE = require('./api/realestate/api_realestate');
+var REALESTATE = require('./api/realestate/apt/getAptList');
 
 // apt / apt 무순위, 잔여세대 / 오피스텔, 도시형, 민간임대
 const aptDetail = {
@@ -62,4 +62,5 @@ const housingMdl = {
     }
 };
 
-REALESTATE.getList(axios);
+var test111 = REALESTATE.getList(axios);
+console.log(test111);
