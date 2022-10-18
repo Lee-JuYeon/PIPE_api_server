@@ -1,6 +1,20 @@
 require("dotenv").config();
 var axios = require('axios');
-var REALESTATE = require('./api/realestate/apt/getAptList');
+var REALESTATE_APT = require('./api/realestate/apt/getAptList');
+var REALESTATE_APT_RANDOME = require('./api/realestate/apt_random/getAptRandomList');
+var REALESTATE_URBAN = require('./api/realestate/house_urban/getHouseUrbanList');
+
+const settingRealEstate_Apt = function(){
+    return REALESTATE_APT.getList(axios);
+}
+
+const settingRealEstate_Apt_Random = REALESTATE_APT_RANDOME.getList(axios);
+const settingRealEstate_Urban = REALESTATE_URBAN.getList(axios);
+
+console.log(settingRealEstate_Urban);
+
+
+/*
 
 // apt / apt 무순위, 잔여세대 / 오피스텔, 도시형, 민간임대
 const aptDetail = {
@@ -62,5 +76,4 @@ const housingMdl = {
     }
 };
 
-var test111 = REALESTATE.getList(axios);
-console.log(test111);
+*/
