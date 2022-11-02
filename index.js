@@ -1,17 +1,42 @@
 require("dotenv").config();
-var axios = require('axios');
-var REALESTATE_APT = require('./api/realestate/apt/getAptList');
-var REALESTATE_APT_RANDOME = require('./api/realestate/apt_random/getAptRandomList');
-var REALESTATE_URBAN = require('./api/realestate/house_urban/getHouseUrbanList');
 
-const settingRealEstate_Apt = function(){
-    return REALESTATE_APT.getList(axios);
-}
+const axios = require('axios');
+const express = require('express');
+const PORT = process.env.PORT || '3001';
+const app = express();
 
-const settingRealEstate_Apt_Random = REALESTATE_APT_RANDOME.getList(axios);
-const settingRealEstate_Urban = REALESTATE_URBAN.getList(axios);
 
-console.log(settingRealEstate_Urban);
+/*
+Middle ware
+*/
+app.use(express.json());
+app.use(express.urlencoded({extended : false}));
+
+/*
+Routes
+*/
+const routeRealestate = require('./routes/route_realestate');
+app.use('/realestate', routeRealestate.router);
+
+/*
+Start listening
+*/
+app.get('/', (request, response) => {
+    response.status(200).send("ssssaaaaaa");
+});
+
+app.listen(PORT, () => {
+    console.log(`${PORT}번 포트로 리스닝중.`)
+});
+
+
+const REALESTATE_APT = require('./api/realestate/apt/getAptList');
+REALESTATE_APT.setListAtDB(axios);
+
+// const settingRealEstate_Apt_Random = REALESTATE_APT_RANDOME.getList(axios);
+// const settingRealEstate_Urban = REALESTATE_URBAN.getList(axios);
+
+// console.log(settingRealEstate_Urban);
 
 
 /*
