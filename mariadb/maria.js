@@ -1,11 +1,11 @@
 const mariadb = require('mariadb');
 
 const db_config = {
-    host : 'localhost',
+    host : process.env.DB_HOST,
     // port : `3304`,
     database : 'testDB',
-    user : 'cavss',
-    password : `VLWKtkfkdgo!)1928`
+    user : process.env.DB_USER,
+    password : process.env.DB_PW
     // connectionLimit : 100000,
     // waitForConnections : true,
     // queueLimist : 0
@@ -13,34 +13,34 @@ const db_config = {
 let pool = mariadb.createPool(db_config);
 
 const realestate_db_config = {
-    host : 'localhost',
-    database : 'pipe_realestate_db',
-    user : 'cavss',
-    password : 'VLWKtkfkdgo!)1928'
+    host : process.env.DB_HOST,
+    database : process.env.DB_REALESTATE,
+    user : process.env.DB_USER,
+    password : process.env.DB_PW
 };
 let realestate_pool = mariadb.createPool(realestate_db_config);
 
 const money_db_config = {
-    host : 'localhost',
-    database : 'pipe_money_db',
-    user : 'cavss',
-    password : 'VLWKtkfkdgo!)1928'
+    host : process.env.DB_HOST,
+    database : process.env.DB_MONEY,
+    user : process.env.DB_USER,
+    password : process.env.DB_PW
 };
 let money_pool = mariadb.createPool(money_db_config);
 
 const recruit_db_config = {
-    host : 'localhost',
-    database : 'pipe_recruit_db',
-    user : 'cavss',
-    password : 'VLWKtkfkdgo!)1928'
+    host : process.env.DB_HOST,
+    database : process.env.DB_RECRUIT,
+    user : process.env.DB_USER,
+    password : process.env.DB_PW
 };
 let recruit_pool = mariadb.createPool(recruit_db_config);
 
 const startup_db_config = {
-    host : 'localhost',
-    database : 'pipe_startup_db',
-    user : 'cavss',
-    password : 'VLWKtkfkdgo!)1928'
+    host : process.env.DB_HOST,
+    database : process.env.DB_STARTUP,
+    user : process.env.DB_USER,
+    password : process.env.DB_PW
 };
 let startup_pool = mariadb.createPool(startup_db_config);
 
