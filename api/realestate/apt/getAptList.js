@@ -25,7 +25,7 @@ const APT_TYPE_GET = function(getAxios) {
     )
 };
 
-const getList = function(axios){
+const getList = function(axios, db){
     var emptyHomeList = [];
     axios
         .all([
@@ -36,7 +36,15 @@ const getList = function(axios){
             axios
                 .spread((homeList, homeTypeList) => {
                     homeList.data.data.forEach(element => {
+                        let ts = Date.now();
+                        let date_ob = new Date(ts);
+                        let date = date_ob.getDate();
+                        let month = date_ob.getMonth() + 1;
+                        let year = date_ob.getFullYear();
+                        let currentDate = year + "." + month + "." + date;
+
                         const item = {
+                            POST_DATE : currentDate,
                             HOUSE_MANAGE_NO : element.HOUSE_MANAGE_NO,
                             PBLANC_NO : element.PBLANC_NO,
                             HOUSE_NM : element.HOUSE_NM,
@@ -104,6 +112,7 @@ const getList = function(axios){
                                 })
                         };
                         emptyHomeList.push(item);
+                        setItemAtDB(item, db);
                     });
                     // console.log(emptyHomeList);
                 })
@@ -112,12 +121,72 @@ const getList = function(axios){
             console.log(`api, realestate, apt, getAptList, getList, then-catch // Err : ${err}`)
         })
         .finally(() => {
-            return emptyHomeList; 
+            console.log(`결과 : ${emptyHomeList.length}`);
+            // const value = ''
+            // const query = 'insert into tableName (title, title2, title3) values (?, ?, ?)';
+            // const rows = await db.query(query, value)
         })
 };
 
+async function setItemAtDB(item, db){
+    try{
+        const sqlData = [
+            item.POST_DATE,
+            item.HOUSE_MANAGE_NO, 
+            item.PBLANC_NO, 
+            item.HOUSE_NM,
+            item.HOUSE_SECD,
+            item.HOUSE_SECD_NM,
+            item.HOUSE_DTL_SECD,
+            item.HOUSE_DTL_SECD_NM,
+            item.RENT_SECD,
+            item.RENT_SECD_NM,
+            item.SUBSCRPT_AREA_CODE,
+            item.SUBSCRPT_AREA_CODE_NM,
+            item.HSSPLY_ZIP,
+            item.HSSPLY_ADRES,
+            item.TOT_SUPLY_HSHLDCO, 
+            item.RCRIT_PBLANC_DE,
+            item.RCEPT_BGNDE,
+            item.RCEPT_ENDDE,
+            item.SPSPLY_RCEPT_BGNDE,
+            item.SPSPLY_RCEPT_ENDDE,
+            item.GNRL_RNK1_CRSPAREA_RCEPT_PD,
+            item.GNRL_RNK1_ETC_GG_RCPTDE_PD,
+            item.GNRL_RNK1_ETC_AREA_RCPTDE_PD,
+            item.GNRL_RNK2_CRSPAREA_RCEPT_PD,
+            item.GNRL_RNK2_ETC_GG_RCPTDE_PD,
+            item.GNRL_RNK2_ETC_AREA_RCPTDE_PD,
+            item.PRZWNER_PRESNATN_DE,
+            item.CNTRCT_CNCLS_BGNDE,
+            item.CNTRCT_CNCLS_ENDDE,
+            item.HMPG_ADRES,  
+            item.CNSTRCT_ENTRPS_NM, 
+            item.MDHS_TELNO,
+            item.BSNS_MBY_NM,
+            item.MVN_PREARNGE_YM,
+            item.SPECLT_RDN_EARTH_AT,
+            item.MDAT_TRGET_AREA_SECD,
+            item.PARCPRC_ULS_AT,
+            item.IMPRMN_BSNS_AT,
+            item.PUBLIC_HOUSE_EARTH_AT,
+            item.LRSCL_BLDLND_AT,
+            item.NPLN_PRVOPR_PUBLIC_HOUSE_AT,
+            item.DETAIL_LIST
+        ];
+        const sqlQuery = 'insert into testTable (test_name, test_title) values (?, ?)';
+        // const reesult = await db.realestate_pool.query(sqlQuery, sqlData);        
+    }catch(err){
+        console.log(`api, realestate, apt, getAptList, setItemAtDB // Err : ${err}`);
+    }
+}
+
+function setListAtDB(axios, db){
+    getList(axios);
+}
 
 
 module.exports = {
-    getList : getList
+    getList : getList,
+    setListAtDB : setListAtDB
 }
